@@ -53,10 +53,9 @@
     self.hitTestEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.imageView.backgroundColor = [UIColor redColor];
-    self.titleLabel.backgroundColor = [UIColor greenColor];
 }
 
+#pragma mark - 扩大点击区域(超出父类范围、不可点击、除非重写父类的hitTest方法)
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
     if(UIEdgeInsetsEqualToEdgeInsets(self.hitTestEdgeInsets, UIEdgeInsetsZero) || !self.enabled || self.hidden)
@@ -70,6 +69,7 @@
     return CGRectContainsPoint(hitFrame, point);
 }
 
+#pragma mark - 重新布局子控件
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -235,7 +235,6 @@
 #pragma mark - 设置titleLabel的宽高
 - (void)dealTitleLabelWidthAndHeight
 {
-
     CGSize titleSize = [self calculateTitleSizeWithText:self.titleLabel.text];
     self.titleWidth = titleSize.width;
     self.titleHeight = titleSize.height;
@@ -258,16 +257,19 @@
 }
 
 #pragma mark - Getters And Setters
+#pragma mark - 设置图片的内切边距
 - (void)setButtonImageEdgeInsets:(UIEdgeInsets)buttonImageEdgeInsets
 {
     _buttonImageEdgeInsets = buttonImageEdgeInsets;
 }
 
+#pragma mark - 设置文字的内切边距
 - (void)setButtonTitleEdgeInsets:(UIEdgeInsets)buttonTitleEdgeInsets
 {
     _buttonTitleEdgeInsets = buttonTitleEdgeInsets;
 }
 
+#pragma mark - 文字动态变化时,设置Button变化方向
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
 {
     [super setTitle:title forState:state];
