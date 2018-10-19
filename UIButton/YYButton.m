@@ -41,6 +41,8 @@
 {
     self.buttonW = 0;
     self.buttonH = 0;
+    self.buttonWidth = 0;
+    self.buttonHeight = 0;
 
     self.titleFont = 15.0;
     self.imageViewWidth = 0;
@@ -98,8 +100,17 @@
 {
     [self dealImageViewWidthAndHeight];
     [self dealTitleLabelWidthAndHeight];
-    [self dealButtonWidth];
-    [self dealImageUpFrame];
+
+    //判断按钮的高度是否固定
+    if ((self.buttonWidth != 0) && (self.buttonHeight != 0))
+    {//这里只需要知道图标top、文字bottom、图标size、文字size
+        [self dealImageUpFrameWithButtonSizeFixed];
+    }
+    else
+    {
+        [self dealButtonWidth];
+        [self dealImageUpFrame];
+    }
 }
 
 #pragma mark - 图片下文字上
@@ -163,7 +174,7 @@
     self.frame = frame;
 }
 
-#pragma mark - 设置imageUp的frame
+#pragma mark - 设置imageUp的frame(按钮size自适应)
 - (void)dealImageUpFrame
 {
     //1、imageView
@@ -174,6 +185,20 @@
     //2、titleLabel
     self.titleLabelX = (self.buttonW/2.0 - self.titleWidth/2.0);
     self.titleLabelY = CGRectGetMaxY(self.imageView.frame) + self.buttonImageEdgeInsets.bottom + self.buttonTitleEdgeInsets.top;
+    self.titleLabel.frame = CGRectMake(self.titleLabelX, self.titleLabelY, self.titleWidth, self.titleHeight);
+}
+
+#pragma mark - 设置imageUp的frame(按钮size固定)
+- (void)dealImageUpFrameWithButtonSizeFixed
+{
+    //1、imageView
+    self.imageViewX = (self.buttonWidth/2.0 - self.imageViewWidth/2.0);
+    self.imageViewY = self.buttonImageEdgeInsets.top;
+    self.imageView.frame = CGRectMake(self.imageViewX, self.imageViewY, self.imageViewWidth, self.imageViewHeight);
+
+    //2、titleLabel
+    self.titleLabelX = (self.buttonW/2.0 - self.titleWidth/2.0);
+    self.titleLabelY = self.buttonHeight - self.titleEdgeInsets.bottom - self.titleHeight;
     self.titleLabel.frame = CGRectMake(self.titleLabelX, self.titleLabelY, self.titleWidth, self.titleHeight);
 }
 

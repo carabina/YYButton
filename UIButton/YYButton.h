@@ -37,6 +37,10 @@ typedef NS_ENUM(NSInteger, YYLayoutPositionType) {
 @property (nonatomic,assign) CGFloat imageViewWidth;
 //imageView高度、默认是图片高度
 @property (nonatomic,assign) CGFloat imageViewHeight;
+//按钮宽度、不设置默认根据图片宽高和UIEdgeInsets计算
+@property (nonatomic,assign) CGFloat buttonWidth;
+//按钮高度、不设置默认根据图片宽高和UIEdgeInsets计算
+@property (nonatomic,assign) CGFloat buttonHeight;
 //imageView边距、默认为(0,0,0,0)
 @property (nonatomic,assign) UIEdgeInsets buttonImageEdgeInsets;
 //titleLabel边距、默认为(0,0,0,0)
