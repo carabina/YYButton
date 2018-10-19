@@ -1,3 +1,3 @@
 # CustomizeButton
   自定义Button
-/Users/yangshichuan/Desktop/buttongif.gif
+  ![image](https://github.com/yscMichael/CustomizeButton/blob/master/buttongif.gif)
