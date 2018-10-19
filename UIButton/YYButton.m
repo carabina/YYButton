@@ -21,6 +21,8 @@
 @property (nonatomic,assign) CGFloat titleHeight;
 @property (nonatomic,assign) CGFloat titleLabelX;
 @property (nonatomic,assign) CGFloat titleLabelY;
+//titleLabel内容
+@property (nonatomic ,copy) NSString *titleString;
 
 @end
 
@@ -31,20 +33,19 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        [self initPara];
+        [self initParaWithFrame:frame];
     }
     return self;
 }
 
 #pragma mark - 初始化参数
-- (void)initPara
+- (void)initParaWithFrame:(CGRect)frame
 {
     self.buttonW = 0;
     self.buttonH = 0;
-    self.buttonWidth = 0;
-    self.buttonHeight = 0;
+    self.buttonWidth = frame.size.width;
+    self.buttonHeight = frame.size.height;
 
-    self.titleFont = 15.0;
     self.imageViewWidth = 0;
     self.imageViewHeight = 0;
     self.buttonImageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -81,16 +82,16 @@
             [self imageUp];
             break;
         case YYLayoutButtonTypeImageDown:
-            [self imageDown];
+//            [self imageDown];
             break;
         case YYLayoutButtonTypeImageLeft:
             [self imageLeft];
             break;
         case YYLayoutButtonTypeImageRight:
-            [self imageRight];
+//            [self imageRight];
             break;
         default:
-            [self imageRight];
+//            [self imageRight];
             break;
     }
 }
@@ -98,16 +99,14 @@
 #pragma mark - 图片上文字下
 - (void)imageUp
 {
-    [self dealImageViewWidthAndHeight];
-    [self dealTitleLabelWidthAndHeight];
-
     //判断按钮的高度是否固定
     if ((self.buttonWidth != 0) && (self.buttonHeight != 0))
-    {//这里只需要知道图标top、文字bottom、图标size、文字size
+    {//按钮高度已经固定、不需要自适应
+     //这里只需要知道图标top、文字bottom、图标size、文字size
         [self dealImageUpFrameWithButtonSizeFixed];
     }
     else
-    {
+    {//按钮高度不固定、需要自适应
         [self dealButtonWidth];
         [self dealImageUpFrame];
     }
@@ -116,8 +115,6 @@
 #pragma mark - 图片下文字上
 - (void)imageDown
 {
-    [self dealImageViewWidthAndHeight];
-    [self dealTitleLabelWidthAndHeight];
     [self dealButtonWidth];
     [self dealImageDownFrame];
 }
@@ -125,17 +122,22 @@
 #pragma mark - 图片左文字右
 - (void)imageLeft
 {
-    [self dealImageViewWidthAndHeight];
-    [self dealTitleLabelWidthAndHeight];
-    [self dealButtonHeight];
-    [self dealImageLeftFrame];
+    //判断按钮的frame是否固定
+    if ((self.buttonWidth != 0) && (self.buttonHeight != 0))
+    {//按钮高度已经固定、不需要自适应
+        //这里只需要知道图标left、right、图标size、文字size
+        [self dealImageLeftFrameWithButtonSizeFixed];
+    }
+    else
+    {//按钮高度不固定、需要自适应
+        [self dealButtonHeight];
+        [self dealImageLeftFrame];
+    }
 }
 
 #pragma mark - 图片右文字左
 - (void)imageRight
 {
-    [self dealImageViewWidthAndHeight];
-    [self dealTitleLabelWidthAndHeight];
     [self dealButtonHeight];
     [self dealImageRightFrame];
 }
@@ -197,8 +199,23 @@
     self.imageView.frame = CGRectMake(self.imageViewX, self.imageViewY, self.imageViewWidth, self.imageViewHeight);
 
     //2、titleLabel
-    self.titleLabelX = (self.buttonW/2.0 - self.titleWidth/2.0);
-    self.titleLabelY = self.buttonHeight - self.titleEdgeInsets.bottom - self.titleHeight;
+    self.titleLabelX = (self.buttonWidth/2.0 - self.titleWidth/2.0);
+    self.titleLabelY = self.buttonHeight - self.buttonTitleEdgeInsets.bottom - self.titleHeight;
+    self.titleLabel.frame = CGRectMake(self.titleLabelX, self.titleLabelY, self.titleWidth, self.titleHeight);
+}
+
+#pragma mark - 设置imageLeft的frame(按钮size固定)
+//用Masonry约束会比系统的提早执行、会出问题;因此这里直接手动计算
+- (void)dealImageLeftFrameWithButtonSizeFixed
+{
+    //1、imageView
+    self.imageViewX = self.buttonImageEdgeInsets.left;
+    self.imageViewY = (self.buttonHeight - self.imageViewHeight) / 2.0;
+    self.imageView.frame = CGRectMake(self.imageViewX, self.imageViewY, self.imageViewWidth, self.imageViewHeight);
+
+    //2、titleLabel
+    self.titleLabelX = (self.buttonImageEdgeInsets.left + self.imageViewWidth + self.buttonImageEdgeInsets.right + self.buttonTitleEdgeInsets.left);
+    self.titleLabelY = (self.buttonHeight - self.titleHeight) / 2.0;
     self.titleLabel.frame = CGRectMake(self.titleLabelX, self.titleLabelY, self.titleWidth, self.titleHeight);
 }
 
@@ -244,37 +261,16 @@
     self.imageView.frame = CGRectMake(self.imageViewX, self.imageViewY, self.imageViewWidth, self.imageViewHeight);
 }
 
-#pragma mark - 设置imageView的宽高
-- (void)dealImageViewWidthAndHeight
-{
-    //1、设置图片的Frame、此时只考虑buttonImageEdgeInsets的top和bottom、默认垂直居中
-    UIImage *image = self.imageView.image;
-    //2、是否需要设置imageViewWidth、imageViewHeight
-    CGFloat imageViewWidth = (self.imageViewWidth == 0) ? image.size.width : self.imageViewWidth;
-    CGFloat imageViewHeight = (self.imageViewHeight == 0) ? image.size.height : self.imageViewHeight;
-
-    self.imageViewWidth = imageViewWidth;
-    self.imageViewHeight = imageViewHeight;
-}
-
-#pragma mark - 设置titleLabel的宽高
-- (void)dealTitleLabelWidthAndHeight
-{
-    CGSize titleSize = [self calculateTitleSizeWithText:self.titleLabel.text];
-    self.titleWidth = titleSize.width;
-    self.titleHeight = titleSize.height;
-}
-
 #pragma mark - 计算文本宽高
 - (CGSize)calculateTitleSizeWithText:(NSString *)text
 {
-    if (!self.fontName)
+    if (!self.textFont)
     {
-        self.titleLabel.font = [UIFont systemFontOfSize:self.titleFont];
+        self.titleLabel.font = [UIFont systemFontOfSize:15.0];
     }
     else
     {
-        self.titleLabel.font = [UIFont fontWithName:self.fontName size:self.titleFont];
+        self.titleLabel.font = self.textFont;
     }
     CGSize size = [text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:self.titleLabel.font,NSFontAttributeName,nil]];
 
@@ -282,6 +278,24 @@
 }
 
 #pragma mark - Getters And Setters
+#pragma mark - 设置Label文字大小
+- (void)setTextFont:(UIFont *)textFont
+{//重新计算文字宽高
+    _textFont = textFont;
+    CGSize titleSize = [self calculateTitleSizeWithText:self.titleString];
+    self.titleWidth = titleSize.width;
+    self.titleHeight = titleSize.height;
+    [self.titleLabel setFont:textFont];
+}
+
+#pragma mark - 设置文字颜色
+- (void)setTextColor:(UIColor *)textColor
+{
+    _textColor = textColor;
+    self.titleLabel.textColor = textColor;
+    [self setTitleColor:textColor forState:UIControlStateNormal];
+}
+
 #pragma mark - 设置图片的内切边距
 - (void)setButtonImageEdgeInsets:(UIEdgeInsets)buttonImageEdgeInsets
 {
@@ -298,6 +312,11 @@
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
 {
     [super setTitle:title forState:state];
+    self.titleString = title;
+    //计算title宽高
+    CGSize titleSize = [self calculateTitleSizeWithText:title];
+    self.titleWidth = titleSize.width;
+    self.titleHeight = titleSize.height;
 
     if (self.positionType == YYLayoutPositionTypeStretchLeft)
     {
@@ -306,6 +325,19 @@
         frame.origin.x -= (titleSize.width - self.titleWidth);
         self.frame = frame;
     }
+}
+
+#pragma mark - 重写image方法
+- (void)setImage:(UIImage *)image forState:(UIControlState)state
+{
+    [super setImage:image forState:state];
+    //1、设置图片的Frame、此时只考虑buttonImageEdgeInsets的top和bottom、默认垂直居中
+    //2、是否需要设置imageViewWidth、imageViewHeight
+    CGFloat imageViewWidth = (self.imageViewWidth == 0) ? image.size.width : self.imageViewWidth;
+    CGFloat imageViewHeight = (self.imageViewHeight == 0) ? image.size.height : self.imageViewHeight;
+
+    self.imageViewWidth = imageViewWidth;
+    self.imageViewHeight = imageViewHeight;
 }
 
 

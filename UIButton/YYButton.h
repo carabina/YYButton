@@ -29,10 +29,10 @@ typedef NS_ENUM(NSInteger, YYLayoutPositionType) {
 
 @interface YYButton : UIButton
 
-//titleLabel字体大小、默认是15.0
-@property (nonatomic,assign) CGFloat titleFont;
-//titleLabel字体名称、默认字体
-@property (nonatomic,strong) NSString *fontName;
+//设置文字字体
+@property (nonatomic,strong) UIFont *textFont;
+//设置文字颜色
+@property (nonatomic,strong) UIColor *textColor;
 //imageView高度、默认是图片宽度
 @property (nonatomic,assign) CGFloat imageViewWidth;
 //imageView高度、默认是图片高度
