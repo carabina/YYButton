@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "YYButton"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.summary      = "custom button."
   s.homepage     = "https://github.com/yscMichael/CustomizeButton"
   s.license      = "MIT"
