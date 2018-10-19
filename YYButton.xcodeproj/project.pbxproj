@@ -23,7 +23,6 @@
 		114519E62014BCAB0082A061 /* BasicLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114519E52014BCAB0082A061 /* BasicLayoutController.m */; };
 		114519E92014BDC70082A061 /* DynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114519E82014BDC70082A061 /* DynamicViewController.m */; };
 		114519EC2014CF450082A061 /* FinalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114519EB2014CF450082A061 /* FinalViewController.m */; };
-		114519EF2014CF6F0082A061 /* YYButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 114519EE2014CF6F0082A061 /* YYButton.m */; };
 		11657F00201383E400CA4116 /* ImageViewRightController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11657EFF201383E400CA4116 /* ImageViewRightController.m */; };
 		11657F03201383F800CA4116 /* LeftAndTopButtonController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11657F02201383F800CA4116 /* LeftAndTopButtonController.m */; };
 		11657F062013841100CA4116 /* RightAndTopButtonController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11657F052013841100CA4116 /* RightAndTopButtonController.m */; };
@@ -34,6 +33,7 @@
 		11657F15201384AB00CA4116 /* ImageIsBiggerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11657F14201384AB00CA4116 /* ImageIsBiggerController.m */; };
 		1189D0392179C22600E1CE5C /* ExpandButtonAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189D0362179C22500E1CE5C /* ExpandButtonAreaController.m */; };
 		1189D03A2179C22600E1CE5C /* ExpandButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189D0382179C22500E1CE5C /* ExpandButton.m */; };
+		1189D03E2179CD6C00E1CE5C /* YYButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189D03D2179CD6C00E1CE5C /* YYButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,8 +86,6 @@
 		114519E82014BDC70082A061 /* DynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicViewController.m; sourceTree = "<group>"; };
 		114519EA2014CF450082A061 /* FinalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalViewController.h; sourceTree = "<group>"; };
 		114519EB2014CF450082A061 /* FinalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalViewController.m; sourceTree = "<group>"; };
-		114519ED2014CF6F0082A061 /* YYButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYButton.h; sourceTree = "<group>"; };
-		114519EE2014CF6F0082A061 /* YYButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYButton.m; sourceTree = "<group>"; };
 		11657EFE201383E400CA4116 /* ImageViewRightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewRightController.h; sourceTree = "<group>"; };
 		11657EFF201383E400CA4116 /* ImageViewRightController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewRightController.m; sourceTree = "<group>"; };
 		11657F01201383F800CA4116 /* LeftAndTopButtonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftAndTopButtonController.h; sourceTree = "<group>"; };
@@ -108,6 +106,8 @@
 		1189D0362179C22500E1CE5C /* ExpandButtonAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpandButtonAreaController.m; path = YYButton/ExpandButtonAreaController.m; sourceTree = "<group>"; };
 		1189D0372179C22500E1CE5C /* ExpandButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpandButton.h; path = YYButton/ExpandButton.h; sourceTree = "<group>"; };
 		1189D0382179C22500E1CE5C /* ExpandButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpandButton.m; path = YYButton/ExpandButton.m; sourceTree = "<group>"; };
+		1189D03C2179CD6C00E1CE5C /* YYButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYButton.h; sourceTree = "<group>"; };
+		1189D03D2179CD6C00E1CE5C /* YYButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,10 +398,18 @@
 			children = (
 				114519EA2014CF450082A061 /* FinalViewController.h */,
 				114519EB2014CF450082A061 /* FinalViewController.m */,
-				114519ED2014CF6F0082A061 /* YYButton.h */,
-				114519EE2014CF6F0082A061 /* YYButton.m */,
+				1189D03B2179CD6C00E1CE5C /* YYButton */,
 			);
 			name = "Button封装最终版";
+			sourceTree = "<group>";
+		};
+		1189D03B2179CD6C00E1CE5C /* YYButton */ = {
+			isa = PBXGroup;
+			children = (
+				1189D03C2179CD6C00E1CE5C /* YYButton.h */,
+				1189D03D2179CD6C00E1CE5C /* YYButton.m */,
+			);
+			path = YYButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -540,8 +548,8 @@
 				114519D5201461E80082A061 /* LayoutViewController.m in Sources */,
 				1189D03A2179C22600E1CE5C /* ExpandButton.m in Sources */,
 				11657F00201383E400CA4116 /* ImageViewRightController.m in Sources */,
+				1189D03E2179CD6C00E1CE5C /* YYButton.m in Sources */,
 				114519E62014BCAB0082A061 /* BasicLayoutController.m in Sources */,
-				114519EF2014CF6F0082A061 /* YYButton.m in Sources */,
 				111588411EC6DE8800A8F92B /* ViewController.m in Sources */,
 				11657F122013849100CA4116 /* ImageViewDownController.m in Sources */,
 				1115883E1EC6DE8800A8F92B /* AppDelegate.m in Sources */,
