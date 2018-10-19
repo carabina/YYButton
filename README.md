@@ -1,3 +1,5 @@
 # CustomizeButton
-  自定义Button
-  ![image](https://github.com/yscMichael/CustomizeButton/blob/master/buttongif.gif)
+效果图如下:
+
+
+![image](https://github.com/yscMichael/CustomizeButton/blob/master/buttongif.gif)
